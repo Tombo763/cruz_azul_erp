@@ -1,18 +1,9 @@
 services:
-  auth-backend:
+  erp-unificado:
     build: .
-    container_name: erp-cruz-azul-auth
+    container_name: erp-cruz-azul
     ports:
-      - "3000:3000"
-    env_file:
-      - .env
-    restart: always
-
-  inventory-frontend:
-    build: ./erp-frontend/frontend
-    container_name: erp-cruz-azul-inventario
-    ports:
-      - "80:3001"
+      - "80:80"
     env_file:
       - .env
     restart: always
