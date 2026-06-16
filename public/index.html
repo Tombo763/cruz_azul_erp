@@ -88,8 +88,8 @@
                 
                 // Redirigir mágicamente al puerto 80 (el Frontend de inventario)
                 setTimeout(() => {
-                    window.location.href = 'http://' + window.location.hostname;
-                }, 1500);
+    window.location.href = 'http://' + window.location.hostname + '?token=' + data.token;
+}, 1500);
 
             } else {
                 msgDiv.style.color = 'red';

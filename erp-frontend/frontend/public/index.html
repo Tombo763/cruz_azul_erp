@@ -112,7 +112,16 @@
 
     // Función de seguridad: Verifica y obtiene el token
     function obtenerToken() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenDesdeUrl = urlParams.get('token');
+
+      if (tokenDesdeUrl) {
+          localStorage.setItem('token', tokenDesdeUrl);
+          window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
       const token = localStorage.getItem('token');
+
       if (!token) {
         alert("Acceso denegado. Serás redirigido al portal de seguridad.");
         window.location.href = AUTH_URL;
