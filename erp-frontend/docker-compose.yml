@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: cruz_azul_frontend
+    ports:
+      - "80:3000" 
+    environment:
+      DB_HOST: "10.0.2.168" # ip de la base de datos privada 
+      DB_NAME: cruz_azul_db
+      DB_USER: farmacia_user
+      DB_PASSWORD: CruzAzul2024!
+    restart: unless-stopped 
