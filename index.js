@@ -24,8 +24,8 @@ const pool = new Pool({
 });
 
 pool.connect()
-  .then(() => console.log('✅ Conectado a AWS RDS PostgreSQL exitosamente'))
-  .catch(err => console.error('❌ Error conectando a RDS:', err));
+  .then(() => console.log(' Conectado a AWS RDS PostgreSQL exitosamente'))
+  .catch(err => console.error(' Error conectando a RDS:', err));
 
 // Endpoint 1: Generar código MFA para la aplicación (ej. Google Authenticator)
 app.post('/api/mfa/setup', (req, res) => {
@@ -65,5 +65,5 @@ app.post('/api/login', (req, res) => {
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor ERP corriendo en el puerto ${PORT}`);
+  console.log(`Servidor ERP corriendo en el puerto ${PORT}`);
 });
