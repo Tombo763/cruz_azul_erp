@@ -10,7 +10,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- Header con logo y título -->
     <header class="main-header">
       <div class="logo-area">
         <div class="logo-icon">
@@ -24,9 +23,11 @@
       <div class="header-badge">
         <i class="fas fa-shopping-cart"></i> Inventario Activo
       </div>
+      <button onclick="cerrarSesion()" style="margin-left: auto; padding: 8px 15px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        <i class="fas fa-sign-out-alt"></i> Salir
+      </button>
     </header>
 
-    <!-- Tarjeta de agregar producto -->
     <div class="card">
       <div class="card-header">
         <i class="fas fa-plus-circle"></i>
@@ -73,7 +74,6 @@
       </div>
     </div>
 
-    <!-- Tarjeta de listado de productos -->
     <div class="card">
       <div class="card-header">
         <i class="fas fa-table-list"></i>
@@ -107,12 +107,47 @@
   </div>
 
   <script>
+    // URL del portal de autenticación (Puerto 3000 de tu instancia)
+    const AUTH_URL = 'http://' + window.location.hostname + ':3000';
+
+    // Función de seguridad: Verifica y obtiene el token
+    function obtenerToken() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("Acceso denegado. Serás redirigido al portal de seguridad.");
+        window.location.href = AUTH_URL;
+        return null;
+      }
+      return token;
+    }
+
+    // Función para cerrar sesión y borrar la llave
+    function cerrarSesion() {
+      localStorage.removeItem('token');
+      window.location.href = AUTH_URL;
+    }
+
     async function cargar() {
+      const token = obtenerToken();
+      if (!token) return; // Si no hay token, detiene la ejecución
+
       const tbody = document.getElementById('tabla');
       tbody.innerHTML = '<tr class="loading-row"><td colspan="6"><i class="fas fa-spinner fa-spin"></i> Cargando productos...</td></tr>';
       
       try {
-        const res = await fetch('/api/productos');
+        const res = await fetch('/api/productos', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}` // Inyección del Token
+          }
+        });
+        
+        // Si el token expiró o es inválido, el backend mandará 401 o 403
+        if (res.status === 401 || res.status === 403) {
+            cerrarSesion();
+            return;
+        }
+
         const data = await res.json();
         
         if (data.length === 0) {
@@ -139,6 +174,9 @@
     }
 
     async function agregar() {
+      const token = obtenerToken();
+      if (!token) return;
+
       const body = {
         nombre: document.getElementById('nombre').value,
         descripcion: document.getElementById('descripcion').value,
@@ -154,10 +192,18 @@
       
       const res = await fetch('/api/productos', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Inyección del Token para poder escribir
+        },
         body: JSON.stringify(body)
       });
       
+      if (res.status === 401 || res.status === 403) {
+          cerrarSesion();
+          return;
+      }
+
       if (res.ok) {
         mostrarMsg('✓ Producto agregado correctamente', 'ok');
         document.getElementById('productoForm').reset();

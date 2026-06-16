@@ -18,6 +18,20 @@ const pool = new Pool({
   }
 });
 
+// Crear la tabla automáticamente si no existe en RDS
+pool.query(`
+  CREATE TABLE IF NOT EXISTS productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    precio NUMERIC NOT NULL,
+    stock INTEGER NOT NULL,
+    categoria VARCHAR(100)
+  );
+`).then(() => console.log('📦 Tabla productos verificada/creada en RDS'))
+  .catch(err => console.error('❌ Error creando tabla:', err));
+
+
 // El "Guardian": middleware que verifica el token JWT
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -58,4 +72,4 @@ app.post('/api/productos', authenticateToken, async (req, res) => {
 });
 
 // Puerto 3001 para coexistir con el autenticador
-app.listen(3001, () => console.log('ERP Cruz Azul (Protegido con JWT) corriendo en puerto 3001'));
+app.listen(3001, () => console.log('📦 ERP Cruz Azul (Protegido con JWT) corriendo en puerto 3001')); 
