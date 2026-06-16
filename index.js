@@ -17,15 +17,15 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  ssl:{
+  port: process.env.DB_PORT || 5432,
+  ssl: {
     rejectUnauthorized: false
   }
 });
 
 pool.connect()
-  .then(() => console.log(' Conectado a AWS RDS PostgreSQL exitosamente'))
-  .catch(err => console.error(' Error conectando a RDS:', err));
+  .then(() => console.log('✅ Conectado a AWS RDS PostgreSQL exitosamente'))
+  .catch(err => console.error('❌ Error conectando a RDS:', err));
 
 // Endpoint 1: Generar código MFA para la aplicación (ej. Google Authenticator)
 app.post('/api/mfa/setup', (req, res) => {
@@ -51,8 +51,11 @@ app.post('/api/login', (req, res) => {
     });
 
     if (verified) {
-      // Si el código del celular es correcto, generamos el JWT para acceder al sitio
-      const token = jwt.sign({ user: username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+      // Si el código del celular es correcto, generamos el JWT para acceder al sitio.
+      // Usa la misma clave de respaldo que el servidor de inventario para que coincidan.
+      const secretKey = process.env.JWT_SECRET || 'secreto_super_seguro_cruz_azul_2026';
+      const token = jwt.sign({ user: username }, secretKey, { expiresIn: '1h' });
+      
       res.json({ message: 'Login exitoso - Acceso concedido', token: token });
     } else {
       res.status(401).json({ error: 'Token MFA inválido o expirado' });
@@ -65,5 +68,5 @@ app.post('/api/login', (req, res) => {
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor ERP corriendo en el puerto ${PORT}`);
+  console.log(`🚀 Servidor de Autenticación ERP corriendo en el puerto ${PORT}`);
 });
