@@ -28,8 +28,8 @@ pool.query(`
     password VARCHAR(255) NOT NULL,
     mfa_secret VARCHAR(100) NOT NULL
   );
-`).then(() => console.log('📦 Tabla de usuarios lista en RDS'))
-  .catch(err => console.error('❌ Error creando tabla:', err));
+`).then(() => console.log('Tabla de usuarios lista en RDS'))
+  .catch(err => console.error('Error creando tabla:', err));
 
 // 1. REGISTRO DE USUARIO
 app.post('/api/register', async (req, res) => {
@@ -85,4 +85,4 @@ app.post('/api/login', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 80;
-app.listen(PORT, () => console.log(`🚀 Servidor unificado corriendo en el puerto ${PORT}`));
+app.listen(PORT, () => console.log(`Servidor unificado corriendo en el puerto ${PORT}`));
