@@ -3,168 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cruz Azul ERP | Catálogo (Modo Lectura)</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <title>Cruz Azul ERP | Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   
   <style>
     /* ===== RESET & BASE ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-      min-height: 100vh;
-      padding: 40px 24px;
-    }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); min-height: 100vh; padding: 40px 24px; }
     .container { max-width: 1400px; margin: 0 auto; }
 
     /* ===== HEADER ===== */
-    .main-header {
-      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
-      border-radius: 24px;
-      padding: 24px 32px;
-      margin-bottom: 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      box-shadow: 0 10px 30px rgba(13, 71, 161, 0.25);
-      color: white;
-    }
+    .main-header { background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%); border-radius: 24px; padding: 24px 32px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; box-shadow: 0 10px 30px rgba(13, 71, 161, 0.25); color: white; }
     .logo-area { display: flex; align-items: center; gap: 18px; }
-    .logo-icon {
-      background: rgba(255, 255, 255, 0.2);
-      width: 56px; height: 56px;
-      border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-    }
+    .logo-icon { background: rgba(255, 255, 255, 0.2); width: 56px; height: 56px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 28px; }
     .logo-text h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 4px; }
     .logo-text span { font-size: 14px; opacity: 0.85; font-weight: 400; }
     
-    .header-actions { display: flex; align-items: center; gap: 15px; }
-    .header-badge {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 10px 20px;
-      border-radius: 40px;
-      font-size: 14px;
-      font-weight: 500;
-      backdrop-filter: blur(4px);
-    }
-    .btn-logout {
-      background: #dc3545;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
-      cursor: pointer;
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.2s;
-      box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
-    }
+    .header-actions { display: flex; align-items: center; gap: 20px; }
+    .user-profile { color: white; font-weight: 500; display: flex; align-items: center; gap: 8px; font-size: 15px; }
+    .user-profile i { font-size: 20px; opacity: 0.8; }
+    
+    .btn-logout { background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 40px; cursor: pointer; font-weight: 600; transition: all 0.2s; box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3); }
     .btn-logout:hover { background: #c82333; transform: translateY(-2px); }
 
-    /* ===== CARDS ===== */
-    .card {
-      background: white;
-      border-radius: 24px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      margin-bottom: 32px;
-      overflow: hidden;
-    }
-    .card-header {
-      background: #f8fafc;
-      padding: 20px 28px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    /* ===== CARDS & TABLE ===== */
+    .card { background: white; border-radius: 24px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); margin-bottom: 32px; overflow: hidden; }
+    .card-header { background: #f8fafc; padding: 20px 28px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 12px; }
     .card-header i { font-size: 24px; color: #0d47a1; }
     .card-header h2 { font-size: 20px; font-weight: 600; color: #1e293b; margin: 0; }
     .card-body { padding: 28px; }
-
-    /* ===== TABLE ===== */
-    .table-wrapper { overflow-x: auto; border-radius: 16px; }
+    .table-wrapper { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th {
-      background: #f1f5f9;
-      color: #1e293b;
-      font-weight: 600;
-      padding: 16px 12px;
-      text-align: center;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    td {
-      padding: 14px 12px;
-      text-align: center;
-      border-bottom: 1px solid #eef2f6;
-      color: #334155;
-    }
-    tr:hover td { background: #f8fafc; }
-    
-    .id-cell { font-weight: 600; color: #0d47a1; font-family: monospace; font-size: 13px; }
-    .product-name { font-weight: 500; color: #0f172a; }
+    th { background: #f1f5f9; color: #1e293b; font-weight: 600; padding: 16px; text-align: center; text-transform: uppercase; font-size: 13px; }
+    td { padding: 14px; text-align: center; border-bottom: 1px solid #eef2f6; color: #334155; }
+    .id-cell { font-weight: 600; color: #0d47a1; font-family: monospace; }
     .price-cell { font-weight: 600; color: #1e7e34; }
-    .stock-cell { font-weight: 500; }
-    .stock-cell.low-stock { color: #e67e22; }
-    .stock-cell i { margin-right: 6px; font-size: 12px; }
-    
-    .category-badge {
-      background: #e8f0fe;
-      color: #0d47a1;
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-size: 12px;
-      font-weight: 500;
-      display: inline-block;
-    }
-
-    /* ===== SCROLLBAR ===== */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb { background: #0d47a1; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #1565c0; }
-
-    @media (max-width: 768px) {
-      .main-header { flex-direction: column; text-align: center; }
-      .logo-area { flex-direction: column; text-align: center; }
-      .header-actions { flex-direction: column; width: 100%; }
-      .btn-logout { width: 100%; }
-    }
+    .category-badge { background: #e8f0fe; color: #0d47a1; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 500; }
   </style>
 </head>
 <body>
 
-  <script>
-    function verificarSeguridad() {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        alert("Acceso denegado. Serás redirigido al portal de seguridad.");
-        window.location.href = '/index.html';
-      }
-    }
-    verificarSeguridad();
-  </script>
-
   <div class="container">
     <header class="main-header">
       <div class="logo-area">
-        <div class="logo-icon">
-          <i class="fas fa-prescription-bottle"></i>
-        </div>
+        <div class="logo-icon"><i class="fas fa-prescription-bottle"></i></div>
         <div class="logo-text">
           <h1>Cruz Azul</h1>
           <span>Sistema ERP · Gestión Farmacéutica</span>
         </div>
       </div>
       <div class="header-actions">
-        <div class="header-badge">
-          <i class="fas fa-lock"></i> Catálogo Protegido
+        <div class="user-profile">
+            <i class="fas fa-user-circle"></i> 
+            <span id="nombre-usuario">Cargando...</span>
         </div>
         <button class="btn-logout" onclick="cerrarSesion()">
           <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
@@ -179,62 +71,13 @@
       </div>
       <div class="card-body">
         <div class="table-wrapper">
-          <table id="productosTable">
+          <table>
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio (CLP)</th>
-                <th>Stock</th>
-                <th>Categoría</th>
-              </tr>
+              <tr><th>ID</th><th>Nombre</th><th>Descripción</th><th>Precio (CLP)</th><th>Stock</th><th>Categoría</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="id-cell">001</td>
-                <td class="product-name">Paracetamol 500mg</td>
-                <td>Caja con 20 comprimidos recubiertos</td>
-                <td class="price-cell">$1.500</td>
-                <td class="stock-cell"><i class="fas fa-check-circle" style="color: #28a745;"></i> 150</td>
-                <td><span class="category-badge">Analgésicos</span></td>
-              </tr>
-              
-              <tr>
-                <td class="id-cell">002</td>
-                <td class="product-name">Ibuprofeno 400mg</td>
-                <td>Caja con 10 cápsulas blandas</td>
-                <td class="price-cell">$2.990</td>
-                <td class="stock-cell"><i class="fas fa-check-circle" style="color: #28a745;"></i> 85</td>
-                <td><span class="category-badge">Antiinflamatorios</span></td>
-              </tr>
-
-              <tr>
-                <td class="id-cell">003</td>
-                <td class="product-name">Amoxicilina 500mg</td>
-                <td>Caja con 21 cápsulas (Con Receta)</td>
-                <td class="price-cell">$3.500</td>
-                <td class="stock-cell low-stock"><i class="fas fa-exclamation-triangle"></i> 8</td>
-                <td><span class="category-badge">Antibióticos</span></td>
-              </tr>
-
-              <tr>
-                <td class="id-cell">004</td>
-                <td class="product-name">Loratadina 10mg</td>
-                <td>Caja con 30 comprimidos</td>
-                <td class="price-cell">$2.100</td>
-                <td class="stock-cell"><i class="fas fa-check-circle" style="color: #28a745;"></i> 45</td>
-                <td><span class="category-badge">Antialérgicos</span></td>
-              </tr>
-
-              <tr>
-                <td class="id-cell">005</td>
-                <td class="product-name">Vitamina C 1000mg</td>
-                <td>Tubo con 10 comprimidos efervescentes</td>
-                <td class="price-cell">$4.500</td>
-                <td class="stock-cell low-stock"><i class="fas fa-exclamation-triangle"></i> 12</td>
-                <td><span class="category-badge">Suplementos</span></td>
-              </tr>
+              <tr><td class="id-cell">001</td><td>Paracetamol 500mg</td><td>Caja con 20 comprimidos</td><td class="price-cell">$1.500</td><td>150</td><td><span class="category-badge">Analgésicos</span></td></tr>
+              <tr><td class="id-cell">002</td><td>Ibuprofeno 400mg</td><td>Caja con 10 cápsulas</td><td class="price-cell">$2.990</td><td>85</td><td><span class="category-badge">Antiinflamatorios</span></td></tr>
             </tbody>
           </table>
         </div>
@@ -243,10 +86,38 @@
   </div>
 
   <script>
+    // 1. Verificación de Seguridad
+    function verificarSeguridad() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert("Acceso denegado.");
+        window.location.href = '/index.html';
+      }
+      return token;
+    }
+
+    // 2. Extraer nombre del usuario del Token JWT
+    function mostrarUsuario() {
+        const token = localStorage.getItem('token');
+        if (token) {
+            try {
+                // El JWT tiene 3 partes. La segunda es el payload codificado en Base64
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                document.getElementById('nombre-usuario').innerText = payload.username;
+            } catch (e) {
+                document.getElementById('nombre-usuario').innerText = "Usuario";
+            }
+        }
+    }
+
     function cerrarSesion() {
       localStorage.removeItem('token');
       window.location.href = '/index.html';
     }
+
+    // Inicializar al cargar
+    verificarSeguridad();
+    mostrarUsuario();
   </script>
 </body>
 </html>
